@@ -1,4 +1,4 @@
-const localStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
 
@@ -27,15 +27,9 @@ function init(passport, getUserByEmail) {
         }
     };
 
-    passport.use(new localStrategy({usernameField: 'email'}, userAuth))
-
-    //Sets id value as cookie to store user across session/ Decides what to store
-    passport.serializeUser((user,done) =>{
-
-    })
-
-    //retrieves cookie
-    passport.deserializeUser((id,done) =>{
+    passport.use(new LocalStrategy({ usernameField: 'email' }, userAuth))
+    passport.serializeUser((user, done) => done(null, user.id))
+    passport.deserializeUser((id, done) => {
 
     })
 }
