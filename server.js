@@ -6,6 +6,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 const bcrypt = require('bcrypt');
 
+
 var app = express();
 
 // view engine setup

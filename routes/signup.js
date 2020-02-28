@@ -1,8 +1,24 @@
+if (process.env.NODE_ENV !== 'production'){
+    require('dotenv').config();
+}
+
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const session = require('express-session');
+const passport = require('passport');
 
 const users =[];
+
+router.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+}));
+
+
+router.use(passport.initialize());
+router.use(passport.session());
 
 
 
@@ -26,4 +42,9 @@ router.post('/', async (req, res) =>{
         console.log(users);
 });
 
-module.exports = router;
+module.exports = {
+    router: router,
+    users: users
+};
+
+

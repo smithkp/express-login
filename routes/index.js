@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var signupRouter = require('./signup');
+var signupRouter = require('./signup').router;
 var loginRouter = require('./login');
 
 router.use('/signup', signupRouter);
