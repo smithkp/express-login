@@ -16,7 +16,7 @@
     <% if (messages.error) { %>
        <h3><%= messages.error %></h3>
     <% } %>
-    <form action="/login" method="post">
+    <form action="/user/login" method="post">
         <div>
             <label for="username">Email</label>
             <input type="email" id="email" name="email" required>
@@ -28,7 +28,7 @@
         </div>
         <button type="submit">Send</button>
     </form>
-    <a href="/signup">Register</a>
+    <a href="/user/signup">Register</a>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

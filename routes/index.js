@@ -1,11 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-var signupRouter = require('./signup').router;
-var loginRouter = require('./login');
+var usersRouter = require('./user');
 
-router.use('/signup', signupRouter);
-router.use('/login', loginRouter);
+
+router.use('/user', usersRouter);
 
 /* GET home page. */
 router.get('/', (req, res, next) =>{
