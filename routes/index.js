@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
+var usersRouter = require('./user').router;
 
-var usersRouter = require('./user');
 
 
 router.use('/user', usersRouter);
 
 /* GET home page. */
-router.get('/', (req, res, next) =>{
-  res.render('index', { username: 'Smithyy140' });
+router.get('/', (req, res) =>{
+  res.render('index', {username: req.user.username});
 });
 
 

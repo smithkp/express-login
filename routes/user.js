@@ -7,29 +7,13 @@ const router = express.Router();
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const flash = require('express-flash');
-const session = require('express-session');
+//const session = require('express-session');
 
 const users = [];
 
-const passportInit = require('../passport-config');
-passportInit(
-    passport,
-    email => users.find(user => user.email === email),
-    id => users.find(user => user.id === id)
-);
-
 router.use(flash());
 
-router.use(passport.initialize());
-router.use(passport.session());
-
-router.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false
-}));
-
-router.get('/signup', (req, res, next) =>{
+router.get('/signup',(req, res, next) =>{
     res.render('signup');
 });
 
@@ -47,7 +31,7 @@ router.post('/signup', async (req, res) =>{
             password: hashedPass
         });
         res.redirect('/user/login');
-    } catch (e) {
+    } catch {
         res.redirect('/user/signup');
     }
     console.log(users);
@@ -59,4 +43,7 @@ router.post('/login', passport.authenticate('local', {
     failureFlash: true
 }));
 
-module.exports = router;
+module.exports = {
+    router: router,
+    users: users
+};

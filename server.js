@@ -4,7 +4,16 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
+const session = require('express-session');
+const passport = require('passport');
+const users = require('./routes/user').users;
 
+const initializePassport = require('./passport-config')
+initializePassport(
+    passport,
+    email => users.find(user => user.email === email),
+    id => users.find(user => user.id === id)
+)
 
 var app = express();
 
@@ -17,6 +26,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false })); //allows form data to be accessed via req
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}))
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 
