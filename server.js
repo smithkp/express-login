@@ -7,6 +7,7 @@ var indexRouter = require('./routes/index');
 const session = require('express-session');
 const passport = require('passport');
 const users = require('./routes/user').users;
+const methodOverride = require('method-override');
 
 const initializePassport = require('./passport-config')
 initializePassport(
@@ -34,6 +35,7 @@ app.use(session({
 }))
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 app.use('/', indexRouter);
 
