@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production'){
+  require('dotenv').config();
+}
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -8,6 +12,7 @@ const session = require('express-session');
 const passport = require('passport');
 const users = require('./routes/user').users;
 const methodOverride = require('method-override');
+const mongoose = require('mongoose');
 
 const initializePassport = require('./passport-config')
 initializePassport(
@@ -39,6 +44,18 @@ app.use(passport.session());
 
 app.use('/', indexRouter);
 
+
+mongoose.connect(process.env.DB_URL,{
+  usedNewUrlParser: true,
+});
+const db = mongoose.connection;
+
+db.on('error', error => {
+  console.error(error);
+});
+
+db.once('open', () => console.log('connected to mongoose...'));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -55,6 +72,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3030);
+app.listen(3000);
 
 module.exports = app;
